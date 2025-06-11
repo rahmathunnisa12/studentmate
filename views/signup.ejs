@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Signup</title>
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Local CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <form method="POST" action="/signup">
+    <h2>Signup</h2>
+    <% if (message && message.length > 0) { %>
+      <p class="error"><%= message %></p>
+    <% } %>
+    <input type="text" name="name" placeholder="Name" required><br><br>
+    <input type="email" name="email" placeholder="Email" required><br><br>
+    <input type="password" name="password" id="password" placeholder="Password" required><br><br>
+    <button type="submit">Signup</button>
+    <p>Already have an account? <a href="/login">Login</a></p>
+  </form>
+
+  <!-- Password Toggle Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const passInput = document.getElementById("password");
+      const toggleBtn = document.createElement("button");
+      toggleBtn.type = "button";
+      toggleBtn.textContent = "Show";
+      toggleBtn.style.marginLeft = "-30px";
+      toggleBtn.style.background = "none";
+      toggleBtn.style.border = "none";
+      toggleBtn.style.color = "#888"; 
+      toggleBtn.style.cursor = "pointer";
+
+      passInput.parentNode.style.position = "relative";
+      passInput.style.paddingRight = "60px";
+      passInput.parentNode.appendChild(toggleBtn);
+
+      toggleBtn.addEventListener("click", function () {
+        const type = passInput.getAttribute("type") === "password" ? "text" : "password";
+        passInput.setAttribute("type", type);
+        toggleBtn.textContent = type === "password" ? "Show" : "Hide";
+      });
+    });
+  </script>
+</body>
+</html>
