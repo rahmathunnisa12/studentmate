@@ -1,4 +1,4 @@
-//models/task.js
+// models/task.js
 const mongoose = require('mongoose');
 
 const taskSchema = new mongoose.Schema({
@@ -15,9 +15,14 @@ const taskSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  completed: { // 👈 New field
+  completed: {
     type: Boolean,
     default: false
+  },
+  category: {
+    type: String,
+    enum: ['Work', 'Personal', 'Study', 'Other'],
+    default: 'Other'
   }
 });
 

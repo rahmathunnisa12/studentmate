@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <title>Add Study Note</title>
-
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
   <style>
     :root {
-      --bg: #f8f2ff; 
+      --bg: #f8f2ff;
       --card-bg: #fff;
       --primary: #7c5ef7;
       --text: #333;
@@ -20,43 +18,36 @@
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--bg);
-      padding: 20px;
+      padding: 30px;
       margin: 0;
     }
 
     .container {
-      max-width: 500px;
+      max-width: 600px;
       margin: auto;
-      background: white;
+      background: var(--card-bg);
       padding: 30px;
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
     }
 
     h2 {
-      text-align: center;
       color: var(--primary);
-      margin-bottom: 20px;
+      text-align: center;
+      margin-bottom: 25px;
     }
 
     input[type="text"],
     select,
     textarea {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
+      padding: 10px 14px;
+      margin: 10px 0 20px;
+      border: 1px solid #ddd;
       border-radius: var(--border-radius);
-      font-size: 14px;
-      margin-bottom: 15px;
+      font-size: 15px;
       box-sizing: border-box;
-      transition: border-color 0.3s ease;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--primary);
-      outline: none;
+      font-family: inherit;
     }
 
     textarea {
@@ -64,19 +55,19 @@
       min-height: 120px;
     }
 
-    button {
+    button[type="submit"] {
       width: 100%;
-      padding: 12px;
       background-color: var(--primary);
       color: white;
       border: none;
-      border-radius: var(--border-radius);
+      padding: 12px;
       font-size: 16px;
+      border-radius: var(--border-radius);
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s;
     }
 
-    button:hover {
+    button[type="submit"]:hover {
       background-color: #6a4de6;
     }
 
@@ -97,10 +88,9 @@
 <body>
   <div class="container">
     <h2>➕ Add New Study Note</h2>
-
-    <form method="POST" action="/add-note">
+    <form method="POST" action="/note/add-note">
       <input type="text" name="title" placeholder="Note Title" required />
-
+      
       <select name="subject">
         <option value="">Select Subject (optional)</option>
         <option value="Math">Math</option>
@@ -110,13 +100,12 @@
         <option value="Computer Science">Computer Science</option>
         <option value="Other">Other</option>
       </select>
-
-      <textarea name="content" placeholder="Write your notes here..."></textarea>
-
-      <button type="submit">Save Note</button>
+      
+      <textarea name="content" placeholder="Write your notes here..." required></textarea>
+      
+      <button type="submit">💾 Save Note</button>
     </form>
-
-    <a class="back-link" href="/notes">← Back to Notes</a>
+    <a class="back-link" href="/note/notes">← Back to Notes</a>
   </div>
 </body>
 </html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Note</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f2ff; 
+      --card-bg: #fff;
+      --primary: #7c5ef7;
+      --text: #333;
+      --border-radius: 10px;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      padding: 20px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: var(--border-radius);
+      font-size: 15px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 150px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #6a4de6;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .alert {
+      padding: 10px 15px;
+      margin-bottom: 20px;
+      border-radius: var(--border-radius);
+      font-weight: 500;
+      text-align: left;
+    }
+
+    .alert-success {
+      background-color: #e6f4ea;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+    }
+
+    .alert-danger {
+      background-color: #fdecea;
+      color: #c62828;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <% if (success_msg) { %>
+      <div class="alert alert-success"><%= success_msg %></div>
+    <% } %>
+
+    <% if (error_msg) { %>
+      <div class="alert alert-danger"><%= error_msg %></div>
+    <% } %>
+
+    <h2>Edit Note</h2>
+    <form method="POST" action="/note/update-note/<%= note._id %>">
+      <input type="text" name="title" value="<%= note.title %>" required />
+
+      <select name="subject">
+        <option value="">Select Subject (optional)</option>
+        <option value="Math" <%= note.subject === 'Math' ? 'selected' : '' %>>Math</option>
+        <option value="Science" <%= note.subject === 'Science' ? 'selected' : '' %>>Science</option>
+        <option value="History" <%= note.subject === 'History' ? 'selected' : '' %>>History</option>
+        <option value="English" <%= note.subject === 'English' ? 'selected' : '' %>>English</option>
+        <option value="Computer Science" <%= note.subject === 'Computer Science' ? 'selected' : '' %>>Computer Science</option>
+        <option value="Other" <%= note.subject === 'Other' ? 'selected' : '' %>>Other</option>
+      </select>
+
+      <textarea name="content" required><%= note.content %></textarea>
+      <button type="submit">Update Note</button>
+    </form>
+
+    <a class="back-link" href="/note/notes">← Back to Notes</a>
+  </div>
+</body>
+</html>

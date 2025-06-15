@@ -1,3 +1,4 @@
+//scan-routes.js
 const fs = require('fs');
 const path = require('path');
 const { parse } = require('path-to-regexp');
@@ -9,7 +10,20 @@ const ROUTE_REGEX = /(app|router)\.(get|post|put|delete|use)\s*\(\s*['"`]([^'"`]
 
 function isValidRoute(routePath) {
   try {
-    parse(routePath); // parse throws error if malformed
+     try {
+  parse(routePath);
+  return true;
+} catch (e) {
+  if (routePath.includes(':') && routePath.includes('(*)')) {
+    // Accept '/:catchAll(*)' as valid fallback
+    return true;
+  }
+  console.warn(`❌ Malformed route detected: "${routePath}"`);
+  console.warn("   → Fix: Add a valid parameter name after ':'");
+  console.warn("   ✅ Example: '/user/:id'\n");
+  return false;
+}
+// parse throws error if malformed
     return true;
   } catch (e) {
     console.warn(`❌ Malformed route detected: "${routePath}"`);

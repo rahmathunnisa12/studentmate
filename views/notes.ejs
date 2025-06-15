@@ -1,12 +1,12 @@
+<!-- views/notes.ejs -->
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Add Study Note</title>
-
+  <title>Study Notes</title>
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
   <style>
     :root {
       --bg: #f8f2ff; 
@@ -25,98 +25,128 @@
     }
 
     .container {
-      max-width: 500px;
+      max-width: 800px;
       margin: auto;
-      background: white;
-      padding: 30px;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
+      text-align: center;
     }
 
-    h2 {
-      text-align: center;
+    h1 {
       color: var(--primary);
       margin-bottom: 20px;
     }
 
-    input[type="text"],
-    select,
-    textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
+    .note-card {
+      background: white;
+      padding: 20px;
       border-radius: var(--border-radius);
-      font-size: 14px;
+      box-shadow: var(--shadow);
       margin-bottom: 15px;
-      box-sizing: border-box;
-      transition: border-color 0.3s ease;
     }
 
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--primary);
-      outline: none;
+    .note-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary);
     }
 
-    textarea {
-      resize: vertical;
-      min-height: 120px;
+    .note-subject {
+      font-size: 14px;
+      color: #666;
     }
 
-    button {
-      width: 100%;
-      padding: 12px;
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      border-radius: var(--border-radius);
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+    .note-content {
+      margin-top: 10px;
+      font-size: 15px;
+      color: var(--text);
     }
 
-    button:hover {
-      background-color: #6a4de6;
+    .note-actions {
+      margin-top: 10px;
     }
 
-    .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
+    .note-actions a {
       color: var(--primary);
       text-decoration: none;
-      font-weight: bold;
+      margin-right: 10px;
+      font-size: 13px;
     }
 
-    .back-link:hover {
-      text-decoration: underline;
+    .logout-btn {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: var(--primary);
+      font-weight: bold;
+      text-decoration: none;
     }
+
+    .add-note-btn {
+      display: inline-block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: var(--primary);
+      color: white;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+    }
+
+    .add-note-btn:hover {
+      background-color: #6a4de6;
+    }
+    .alert {
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  text-align: left;
+}
+
+.alert-success {
+  background-color: #e6f4ea;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.alert-danger {
+  background-color: #fdecea;
+  color: #c62828;
+  border: 1px solid #f5c6cb;
+}
+
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>➕ Add New Study Note</h2>
+    <% if (success_msg) { %>
+  <div class="alert alert-success"><%= success_msg %></div>
+<% } %>
 
-    <form method="POST" action="/add-note">
-      <input type="text" name="title" placeholder="Note Title" required />
+<% if (error_msg) { %>
+  <div class="alert alert-danger"><%= error_msg %></div>
+<% } %>
 
-      <select name="subject">
-        <option value="">Select Subject (optional)</option>
-        <option value="Math">Math</option>
-        <option value="Science">Science</option>
-        <option value="History">History</option>
-        <option value="English">English</option>
-        <option value="Computer Science">Computer Science</option>
-        <option value="Other">Other</option>
-      </select>
+    <h1>📚 Study Notes</h1>
+    <a class="add-note-btn" href="/note/add-note">➕ Add New Note</a>
 
-      <textarea name="content" placeholder="Write your notes here..."></textarea>
+    <% if (notes && notes.length > 0) { %>
+      <% notes.forEach(note => { %>
+        <div class="note-card">
+          <div class="note-title"><%= note.title %></div>
+          <div class="note-subject">Subject: <%= note.subject || 'General' %></div>
+          <div class="note-content"><%= note.content.substring(0, 100) %><% if (note.content.length > 100) { %>...<% } %></div>
+          <div class="note-actions">
+  <a href="/note/edit-note/<%= note._id %>">Edit</a>
+  <form action="/note/delete-note/<%= note._id %>" method="POST" style="display: inline;">
+    <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</button>
+  </form>
+</div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p style="margin-top: 20px;">No notes found. Please add some.</p>
+    <% } %>
 
-      <button type="submit">Save Note</button>
-    </form>
-
-    <a class="back-link" href="/notes">← Back to Notes</a>
+    <a class="logout-btn" href="/dashboard">← Back to Dashboard</a>
   </div>
 </body>
 </html>
