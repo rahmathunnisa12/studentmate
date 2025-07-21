@@ -1,3 +1,4 @@
+//app.js
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -26,8 +27,8 @@ app.use(session({
 const flash = require('connect-flash');
 app.use(flash());
 app.use((req, res, next) => {
-  res.locals.success_msg = req.flash('success');
-  res.locals.error_msg = req.flash('error');
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
   next();
 });
 
@@ -57,6 +58,7 @@ app.use('/flashcards', flashcardRoutes);
 app.get('/', (req, res) => {
   res.redirect('/login');
 });
+
 
 // 404 handler
 app.use((req, res, next) => {

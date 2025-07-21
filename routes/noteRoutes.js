@@ -40,6 +40,7 @@ router.get('/notes', ensureAuthenticated, async (req, res) => {
 });
 
 // Edit Note Page
+/*
 router.get('/edit-note/:id', ensureAuthenticated, async (req, res) => {
   try {
     const note = await Note.findOne({ _id: req.params.id, userId: req.session.user._id });
@@ -48,6 +49,27 @@ router.get('/edit-note/:id', ensureAuthenticated, async (req, res) => {
   } catch (err) {
     console.error("Error fetching note:", err);
     res.status(500).send("Server error");
+  }
+});*/
+router.get('/edit-note/:id', ensureAuthenticated, async (req, res) => {
+  try {
+    const note = await Note.findOne({
+      _id: req.params.id,
+      userId: req.session.user._id
+    });
+
+    if (!note) {
+      req.flash('error_msg', 'Note not found');
+      return res.redirect('/note/notes');
+    }
+
+    console.log("Note to Edit:", note); // ✅ ADD THIS
+
+    res.render('edit-note', { note });
+  } catch (err) {
+    console.error("Edit Note Route Error:", err);
+    req.flash('error_msg', 'Something went wrong');
+    res.redirect('/note/notes');
   }
 });
 

@@ -5,6 +5,16 @@ const Task = require('../models/task');
 const ensureAuthenticated = require('../middleware/authMiddleware');
 
 console.log("✅ LOADED: taskRoutes.js");
+// GET /task - Show tasks or redirect
+router.get('/', ensureAuthenticated, async (req, res) => {
+  try {
+    const tasks = await Task.find({ userId: req.session.user._id });
+    res.render('dashboard', { tasks }); // make sure 'dashboard.ejs' is ready to receive 'tasks'
+  } catch (err) {
+    console.error("Fetch tasks error:", err);
+    res.status(500).send("Error fetching tasks");
+  }
+});
 
 // Add Task
 router.post('/task', ensureAuthenticated, async (req, res) => {
@@ -79,6 +89,5 @@ router.post('/edit-task/:id', ensureAuthenticated, async (req, res) => {
     res.status(500).send("Error updating task");
   }
 });
-
 
 module.exports = router;

@@ -10,17 +10,10 @@ const noteSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  subject: {
-    type: String,
-    default: 'General'
-  },
+  subject: String,
   content: {
     type: String,
     required: true
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
   }
 });
 

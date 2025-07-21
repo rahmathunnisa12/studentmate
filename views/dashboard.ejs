@@ -9,229 +9,269 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <style>
-    :root {
-      --bg: #f8f2ff;  
-      --card-bg: #fff;
-      --primary: #7c5ef7;
-      --text: #333;
-      --border-radius: 10px;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg);
-      padding: 20px;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: start;
-      min-height: 100vh;
-    }
-    .container {
-      max-width: 600px;
-      margin: auto;
-      text-align: center;
-    }
-    h1 {
-      color: var(--primary);
-      margin-bottom: 20px;
-    }
-    form {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
+ <style>
+  :root {
+    --bg: #0d1b2a;
+    --card-bg: #1b263b;
+    --primary: #118ab2;
+    --text: #ffffff;
+    --sub-text: #ddd;
+    --border-radius: 12px;
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    --accent: #00d2c3;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+  }
+
+  h1 {
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  select {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: #333;
+    color: var(--text);
+    font-size: 14px;
+  }
+
+  button {
+    padding: 12px 20px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #0c6b8f;
+  }
+
+  .filters {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .filters button {
+    background-color: #333;
+    color: var(--sub-text);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .filters button:hover {
+    background-color: #444;
+  }
+
+  .filters button.active {
+    background-color: var(--accent);
+    color: white;
+  }
+
+  .progress-summary {
+    margin-bottom: 20px;
+  }
+
+  .progress-summary p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: var(--sub-text);
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px 0;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background-color: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .task-list {
+    margin-top: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+  }
+
+  .task-card {
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease;
+    border: 1px solid #2a2a2a;
+  }
+
+  .task-card:hover {
+    transform: scale(1.01);
+  }
+
+  .task-title {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  .task-due-date {
+    color: var(--sub-text);
+    font-size: 14px;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .edit-btn {
+    background-color: #118ab2;
+    color: white;
+  }
+
+  .delete-btn {
+    background-color: #ef476f;
+    color: white;
+  }
+
+  .edit-btn:hover {
+    background-color: #0d6d94;
+  }
+
+  .delete-btn:hover {
+    background-color: #d62839;
+  }
+
+  .links {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    background-color: var(--accent);
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .link-btn:hover {
+    background-color: #00b0a6;
+  }
+
+  .icon {
+    font-size: 16px;
+  }
+
+  .logout-btn {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: var(--accent);
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .logout-btn:hover {
+    text-decoration: underline;
+  }
+
+  .loading {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .completed-task {
+    background-color: #1f3a3d;
+    text-decoration: line-through;
+    color: #888;
+  }
+
+  @media (max-width: 500px) {
     input[type="text"],
     input[type="date"],
     select {
-      flex: 1;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: var(--border-radius);
-      font-size: 14px;
-    }
-    button {
-      padding: 12px 20px;
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      border-radius: var(--border-radius);
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #6a4de6;
-    }
-    .filters {
-      margin-bottom: 15px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .filters button {
-      background-color: #ddd;
-      color: #333;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .filters button:hover {
-      background-color: #ccc;
-    }
-    .filters button.active {
-      background-color: var(--primary);
-      color: white;
-    }
-    .progress-summary {
-      margin-bottom: 20px;
-    }
-    .progress-summary p {
-      margin: 5px 0;
-      font-size: 14px;
-      color: var(--text);
-    }
-    .progress-bar {
       width: 100%;
-      height: 10px;
-      background-color: #ddd;
-      border-radius: 5px;
-      overflow: hidden;
-      margin: 10px 0;
     }
-    .progress-fill {
-      height: 100%;
-      background-color: #4caf50;
-      transition: width 0.3s ease;
-    }
-    .task-list {
-      margin-top: 20px;
-      max-height: 300px;
-      overflow-y: auto;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-    }
-    .task-card {
-      background: white;
-      padding: 15px;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: transform 0.2s ease;
-    }
-    .task-card:hover {
-      transform: scale(1.01);
-    }
-    .task-title {
-      font-weight: bold;
-      color: var(--text);
-    }
-    .task-due-date {
-      color: #777;
-      font-size: 14px;
-    }
-    .action-buttons {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    .edit-btn,
-    .delete-btn {
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .edit-btn {
-      background-color: #1e90ff;
-      color: white;
-    }
-    .delete-btn {
-      background-color: #e74c3c;
-      color: white;
-    }
-    .edit-btn:hover {
-      background-color: #1565c0;
-    }
-    .delete-btn:hover {
-      background-color: #c0392b;
-    }
-    .links {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: center;
-    }
-    .link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 10px 20px;
-      border-radius: var(--border-radius);
-      background-color: var(--primary);
-      color: white;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-    .link-btn:hover {
-      background-color: #6a4de6;
-    }
-    .icon {
-      font-size: 16px;
-    }
-    .logout-btn {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      color: var(--primary);
-      font-weight: bold;
-      text-decoration: none;
-    }
-    .logout-btn:hover {
-      text-decoration: underline;
-    }
+  }
 
-    /* Loading state */
-    .loading {
-      opacity: 0.6;
-      pointer-events: none;
-    }
-
-    /* Completed Task Styling */
-    .completed-task {
-      background-color: #e6ffe6;
-      text-decoration: line-through;
-    }
-
-    @media (max-width: 500px) {
-      input[type="text"],
-      input[type="date"],
-      select {
-        width: 100%;
-      }
-    }
-
-    /* Screen reader only utility class */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
-    }
-  </style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+</style>
+ 
 </head>
 <body>
   <% if (success_msg) { %>
@@ -245,7 +285,7 @@
     <h1>Welcome, <%= user.name %>!</h1>
 
     <!-- Add Task Form -->
-    <form method="POST" action="/task">
+    <form method="POST" action="/task/task">
       <input type="text" name="title" placeholder="Task Title" required />
       <input type="date" name="dueDate" required />
       <!-- Category Dropdown -->
@@ -348,7 +388,7 @@
       taskCard.classList.add('loading');
 
       const isCompleted = checkbox.checked;
-      fetch(`/task/toggle-complete/${taskId}`, {
+      fetch(/task/toggle-complete/${taskId}, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -357,9 +397,9 @@
       })
       .then(response => response.json())
       .then(data => {
-        document.getElementById('percent-done').textContent = `${data.percentDone}%`;
-        document.getElementById('progress-fill').style.width = `${data.percentDone}%`;
-        document.getElementById('task-count').innerHTML = `${data.completedCount} completed out of ${data.totalTasks}`;
+        document.getElementById('percent-done').textContent = ${data.percentDone}%;
+        document.getElementById('progress-fill').style.width = ${data.percentDone}%;
+        document.getElementById('task-count').innerHTML = ${data.completedCount} completed out of ${data.totalTasks};
         
         if (isCompleted) {
           taskCard.classList.add('completed-task');
@@ -378,4 +418,4 @@
     }
   </script>
 </body>
-</html> 
+</html>

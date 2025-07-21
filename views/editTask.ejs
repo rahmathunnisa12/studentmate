@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Task</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f2ff; 
+      --card-bg: #fff;
+      --primary: #7c5ef7;
+      --border-radius: 10px;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+    }
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+    input[type="text"],
+    input[type="date"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: var(--border-radius);
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #6a4de6;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Edit Task</h2>
+    <form method="POST" action="/task/edit-task/<%= task._id %>">
+      <input type="text" name="title" value="<%= task.title %>" required />
+      <input type="date" name="dueDate" value="<%= task.dueDate.toISOString().split('T')[0] %>" required />
+      <select name="category">
+        <option value="Work" <%= task.category === 'Work' ? 'selected' : '' %>>Work</option>
+        <option value="Personal" <%= task.category === 'Personal' ? 'selected' : '' %>>Personal</option>
+        <option value="Study" <%= task.category === 'Study' ? 'selected' : '' %>>Study</option>
+        <option value="Other" <%= task.category === 'Other' ? 'selected' : '' %>>Other</option>
+      </select>
+      <button type="submit">Save Changes</button>
+    </form>
+    <a class="back-link" href="/dashboard">← Back to Dashboard</a>
+  </div>
+</body>
+</html>
